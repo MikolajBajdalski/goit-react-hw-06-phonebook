@@ -1,19 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './ContactListItem.module.css';
+import { useDispatch } from 'react-redux';
 
-const ContactListItem = ({ contact, onDeleteContact }) => {
+import styles from './ContactListItem.module.css';
+import { deleteContact } from 'store/contactsSlice';
+
+const ContactListItem = ({ contact }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteContact = () => {
+    dispatch(deleteContact(contact.id));
+  };
+
   return (
     <li className={styles.listItem}>
       {contact.name}: {contact.number}
-      <button onClick={() => onDeleteContact(contact.id)}>Delete</button>
+      <button onClick={handleDeleteContact}>Delete</button>
     </li>
   );
 };
 
-ContactListItem.propTypes = {
-  contact: PropTypes.object.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-};
-
+// propTypes są teraz zbędne, ponieważ nie korzystamy już z onDeleteContact jako prop
 export default ContactListItem;
