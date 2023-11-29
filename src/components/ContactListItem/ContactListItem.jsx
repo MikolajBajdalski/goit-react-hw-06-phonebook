@@ -19,5 +19,4 @@ const ContactListItem = ({ contact }) => {
   );
 };
 
-// propTypes są teraz zbędne, ponieważ nie korzystamy już z onDeleteContact jako prop
 export default ContactListItem;
