@@ -6,20 +6,35 @@ export const contactsSlice = createSlice({
   reducers: {
     addContact: {
       reducer: (state, action) => {
-        state.push(action.payload);
+        const duplicate = state.some(
+          contact => contact.name === action.payload.name
+        );
+        if (!duplicate) {
+          state.push(action.payload);
+        }
       },
       prepare: ({ name, number }) => {
-        // Utworzenie unikalnego ID dla kontaktu
         const id = nanoid();
         return { payload: { id, name, number } };
       },
     },
     deleteContact: (state, action) => {
-      return state.filter(contact => contact.id !== action.payload);
+      const index = state.findIndex(contact => contact.id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     },
-    // ... inne akcje
+    updateContact: (state, action) => {
+      const index = state.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      if (index !== -1) {
+        state[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
+export const { addContact, deleteContact, updateContact } =
+  contactsSlice.actions;
 export default contactsSlice.reducer;
