@@ -33,5 +33,4 @@ const ContactList = () => {
   );
 };
 
-// propTypes są teraz zbędne, więc je usunięto
 export default ContactList;
